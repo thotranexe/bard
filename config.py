@@ -1,3 +1,0 @@
-API_KEY="a09430946fe14a9bbf9b29868eba80bb"
-API_ID="23a254a3df2244eeb46aaeb68c1bab2e"
-USERNAME="syxat7gz1oay2fir0cc974aqb"
