@@ -95,7 +95,7 @@ if st.button("Click once you finish rating EVERYTHING"):
 
   pca = decomposition.PCA().fit(X_scaled)
 
-    # Fit your dataset to the optimal pca
+    # Fit your dataset to the optimal pca (dimenstionality reduction)
   pca1 = decomposition.PCA(n_components=8)
   X_pca = pca1.fit_transform(X_scaled)
 
@@ -104,7 +104,7 @@ if st.button("Click once you finish rating EVERYTHING"):
 
   tsne = TSNE(random_state=17,perplexity=5)
   X_tsne = tsne.fit_transform(X_scaled)
-
+  #data vis
 
   from scipy.sparse import csr_matrix, hstack
 
@@ -137,6 +137,7 @@ if st.button("Click once you finish rating EVERYTHING"):
   gcv1 = GridSearchCV(rfc, parameters, n_jobs=-1, cv=skf, verbose=1)
   gcv1.fit(X_train_last, y_train)
 
+  # nearest neigbors last
   from sklearn.neighbors import KNeighborsClassifier
 
   knn_params = {'n_neighbors': range(1, 8)}
@@ -166,9 +167,7 @@ if st.button("Click once you finish rating EVERYTHING"):
 
   X_test_names = v.transform(rec_track_names)
 
-  rec_playlist_df=rec_playlist_df[["acousticness", "danceability", "duration_ms", 
-                         "energy", "instrumentalness",  "key", "liveness",
-                         "loudness", "mode", "speechiness", "tempo", "valence"]]
+  rec_playlist_df=rec_playlist_df[["acousticness", "danceability", "duration_ms", "energy", "instrumentalness",  "key", "liveness", "loudness", "mode", "speechiness", "tempo", "valence"]]
 
   # Make predictions
   tree_grid.best_estimator_.fit(X_train_last, y_train)
@@ -180,12 +179,11 @@ if st.button("Click once you finish rating EVERYTHING"):
   rec_playlist_df['ratings']=y_pred_class
   rec_playlist_df = rec_playlist_df.sort_values('ratings', ascending = False)
   rec_playlist_df = rec_playlist_df.reset_index()
-  # Pick the top ranking tracks to add your new playlist 9, 10 will work
+  # Pick the top ranking tracks to add your new playlist 70% for passing grade :)
   recs_to_add = rec_playlist_df[rec_playlist_df['ratings']>=7]['index'].values.tolist()
 
 
-    #rec_array = np.reshape(recs_to_add, (29,1))
-    # Create a new playlist for tracks to add - you may also add these tracks to your source playlist and proceed
+  # Create a new playlist for tracks to add - you may also add these tracks to your source playlist and proceed
   playlist_recs = sp.user_playlist_create(username,name='Reccomended by Bard - {}'.format(sourcePlaylist['name']))
   np.array(recs_to_add)
   # Add tracks to the new playlist
